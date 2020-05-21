@@ -19,8 +19,16 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
-    protected function posts(){
+    public function posts(){
         return $this->hasMany('App\Post');
+    }
+
+    public function favorites(){
+        return $this->hasMany('App\Favorite');
+    }
+
+    public function ownFavorite($post_id){
+        return(boolean) $this->favorites()->where('post_id',$post_id)->first(['id']);
     }
 
     /**
