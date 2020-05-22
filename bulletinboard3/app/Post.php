@@ -12,4 +12,8 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function favorites(){
+        return $this->hasMany('App\Favorite');
+    }
+
 }

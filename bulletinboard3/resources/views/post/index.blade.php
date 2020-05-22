@@ -34,8 +34,9 @@
                                         <i class="fas fa-heart"></i>
                                     </button>
                                 </form>
-                            @endif
+                            @endif   
                         </li>
+                        <li class="list-inline-item"> {{ $post->favorites->count() }}</li>
                     </ul>
                 </div>
                 <hr class="hr">
