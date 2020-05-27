@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
@@ -23,6 +20,16 @@ Route::group(['middleware'=>'auth'],function(){
 // PostController
 Route::resource('posts','PostController');
 
+Route::post('/ownFavorite/{post}',[
+    'uses' => 'PostController@ownFavorite',
+    'as' => 'posts.ownFavorite'
+    ]);
+
+Route::post('/deleteFavorite/{post}',[
+    'uses' => 'PostController@deleteFavorite',
+    'as' => 'posts.deleteFavorite'
+    ]);
+
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');

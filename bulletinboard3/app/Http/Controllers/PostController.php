@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Post;
+use App\Favorite;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
@@ -51,17 +52,6 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -101,6 +91,20 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+        return redirect(route('posts.index'));
+    }
+
+
+    public function ownFavorite(Post $post){
+        Auth::user()->favorites()->create([
+            'post_id' => $post->id
+        ]);
+        return redirect(route('posts.index'));
+    }
+
+    public function deleteFavorite(Post $post){
+        $favorite = Auth::user()->favorites()->where('post_id',$post->id)->first();
+        $favorite->delete();
         return redirect(route('posts.index'));
     }
 }
